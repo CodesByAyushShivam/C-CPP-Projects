@@ -61,7 +61,7 @@ void print_menu(){
     printf("Select your desired option from menu: \n");
     printf("\n0 -> Exit");
     printf("\n1 -> Addition");
-    printf("\n2 -> Substraction");
+    printf("\n2 -> Subtraction");
     printf("\n3 -> Multiplication");
     printf("\n4 -> Division");
     printf("\n5 -> Modulus");
