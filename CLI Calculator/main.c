@@ -8,19 +8,20 @@ void multiply();
 void divide();
 void modulus();
 void power();
+void calc_sine();
 
 int main(){
     int choice;
     while(1){
         print_menu();
-        printf("Enter your choice: ");
+        printf("\n\nEnter your choice: ");
         scanf("%d", &choice);
         
         if (choice == 0){
             break;
         }
         
-        else if (choice > 6 || choice < 0){
+        else if (choice > 7 || choice < 0){
             continue;
         }
         
@@ -49,6 +50,10 @@ int main(){
                 power();
                 break;
             }
+            case 7:{
+                calc_sine();
+                break;
+            }
         }
     }
     
@@ -61,11 +66,12 @@ void print_menu(){
     printf("Select your desired option from menu: \n");
     printf("\n0 -> Exit");
     printf("\n1 -> Addition");
-    printf("\n2 -> Subtraction");
+    printf("\n2 -> Substraction");
     printf("\n3 -> Multiplication");
     printf("\n4 -> Division");
     printf("\n5 -> Modulus");
-    printf("\n6 -> Power\n\n");
+    printf("\n6 -> Power");
+    printf("\n7 -> Sine");
 }
 
 void add(){
@@ -132,4 +138,12 @@ void power(){
     printf("Enter 2nd number: ");
     scanf("%f", &b);
     printf("%f ^ %f = %f", a, b, pow(a,b));
+}
+
+void calc_sine(){
+    double a, b;
+    printf("\nEnter angle in degree: ");
+    scanf("%lf", &a);
+    b = (a * M_PI) / 180.0;
+    printf("The value of sin(%lf) = %lf", a, sin(b));
 }
