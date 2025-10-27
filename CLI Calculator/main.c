@@ -9,6 +9,7 @@ void divide();
 void modulus();
 void power();
 void calc_sine();
+void calc_cos();
 
 int main(){
     int choice;
@@ -21,7 +22,7 @@ int main(){
             break;
         }
         
-        else if (choice > 7 || choice < 0){
+        else if (choice > 8 || choice < 0){
             continue;
         }
         
@@ -54,6 +55,10 @@ int main(){
                 calc_sine();
                 break;
             }
+            case 8:{
+                calc_cos();
+                break;
+            }
         }
     }
     
@@ -72,6 +77,7 @@ void print_menu(){
     printf("\n5 -> Modulus");
     printf("\n6 -> Power");
     printf("\n7 -> Sine");
+    printf("\n8 -> Cos or Cosine");
 }
 
 void add(){
@@ -146,4 +152,12 @@ void calc_sine(){
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
     printf("The value of sin(%lf) = %lf", a, sin(b));
+}
+
+void calc_cos(){
+    double a, b;
+    printf("\nEnter angle in degree: ");
+    scanf("%lf", &a);
+    b = (a * M_PI) / 180.0;
+    printf("The value of cos(%lf) = %lf", a, cos(b));
 }
