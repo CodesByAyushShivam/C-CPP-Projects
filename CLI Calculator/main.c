@@ -76,7 +76,7 @@ void print_menu(){
     printf("\n4 -> Division");
     printf("\n5 -> Modulus");
     printf("\n6 -> Power");
-    printf("\n7 -> Sine");
+    printf("\n7 -> Sin or sine");
     printf("\n8 -> Cos or Cosine");
 }
 
