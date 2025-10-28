@@ -10,6 +10,7 @@ void modulus();
 void power();
 void calc_sine();
 void calc_cos();
+void calc_tan();
 
 int main(){
     int choice;
@@ -22,7 +23,7 @@ int main(){
             break;
         }
         
-        else if (choice > 8 || choice < 0){
+        else if (choice > 9 || choice < 0){
             continue;
         }
         
@@ -59,6 +60,9 @@ int main(){
                 calc_cos();
                 break;
             }
+            case 9:{
+                calc_tan();
+            }
         }
     }
     
@@ -76,8 +80,9 @@ void print_menu(){
     printf("\n4 -> Division");
     printf("\n5 -> Modulus");
     printf("\n6 -> Power");
-    printf("\n7 -> Sin or sine");
+    printf("\n7 -> Sine");
     printf("\n8 -> Cos or Cosine");
+    printf("\n9 -> Tan or Tangent");
 }
 
 void add(){
@@ -160,4 +165,12 @@ void calc_cos(){
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
     printf("The value of cos(%lf) = %lf", a, cos(b));
+}
+
+void calc_tan(){
+    double a, b;
+    printf("\nEnter angle in degree: ");
+    scanf("%lf", &a);
+    b = (a * M_PI) / 180.0;
+    printf("The value of tan(%lf) = %lf", a, tan(b));
 }
