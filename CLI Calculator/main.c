@@ -80,7 +80,7 @@ void print_menu(){
     printf("\n4 -> Division");
     printf("\n5 -> Modulus");
     printf("\n6 -> Power");
-    printf("\n7 -> Sine");
+    printf("\n7 -> Sin or Sine");
     printf("\n8 -> Cos or Cosine");
     printf("\n9 -> Tan or Tangent");
 }
