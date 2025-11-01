@@ -11,6 +11,7 @@ void power();
 void calc_sine();
 void calc_cos();
 void calc_tan();
+void calc_cosec();
 
 int main(){
     int choice;
@@ -23,7 +24,7 @@ int main(){
             break;
         }
         
-        else if (choice > 9 || choice < 0){
+        else if (choice > 10 || choice < 0){
             continue;
         }
         
@@ -63,6 +64,9 @@ int main(){
             case 9:{
                 calc_tan();
             }
+            case 10:{
+                calc_cosec();
+            }
         }
     }
     
@@ -83,6 +87,7 @@ void print_menu(){
     printf("\n7 -> Sin or Sine");
     printf("\n8 -> Cos or Cosine");
     printf("\n9 -> Tan or Tangent");
+    printf("\n10 -> Cosec or Cosecant")
 }
 
 void add(){
@@ -173,4 +178,12 @@ void calc_tan(){
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
     printf("The value of tan(%lf) = %lf", a, tan(b));
+}
+
+void calc_cosec(){
+    double a, b;
+    printf("\nEnter angle in degree: ");
+    scanf("%lf", &a);
+    b = (a * M_PI) / 180.0;
+    printf("The value of cosec(%lf) = %lf", a, 1/sin(b));
 }
