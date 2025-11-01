@@ -87,7 +87,7 @@ void print_menu(){
     printf("\n7 -> Sin or Sine");
     printf("\n8 -> Cos or Cosine");
     printf("\n9 -> Tan or Tangent");
-    printf("\n10 -> Cosec or Cosecant")
+    printf("\n10 -> Cosec or Cosecant");
 }
 
 void add(){
@@ -96,7 +96,7 @@ void add(){
     scanf("%f", &a);
     printf("Enter 2nd number: ");
     scanf("%f", &b);
-    printf("%f + %f = %f", a, b, a+b);
+    printf("%.2f + %.2f = %.2f", a, b, a+b);
 }
 
 void subtract(){
@@ -105,7 +105,7 @@ void subtract(){
     scanf("%f", &a);
     printf("Enter 2nd number: ");
     scanf("%f", &b);
-    printf("%f - %f = %f", a, b, a-b);
+    printf("%.2f - %.2f = %.2f", a, b, a-b);
 }
 
 void multiply(){
@@ -114,7 +114,7 @@ void multiply(){
     scanf("%f", &a);
     printf("Enter 2nd number: ");
     scanf("%f", &b);
-    printf("%f X %f = %f", a, b, a*b);
+    printf("%.2f X %.2f = %.2f", a, b, a*b);
 }
 
 void divide(){
@@ -128,7 +128,7 @@ void divide(){
     }
     
     else{
-        printf("%f ÷ %f = %f", a, b, a / b);
+        printf("%.2f ÷ %.2f = %.2f", a, b, a / b);
     }
 }
 
@@ -153,7 +153,7 @@ void power(){
     scanf("%f", &a);
     printf("Enter 2nd number: ");
     scanf("%f", &b);
-    printf("%f ^ %f = %f", a, b, pow(a,b));
+    printf("%.2f ^ %.2f = %.2f", a, b, pow(a,b));
 }
 
 void calc_sine(){
@@ -161,7 +161,7 @@ void calc_sine(){
     printf("\nEnter angle in degree: ");
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
-    printf("The value of sin(%lf) = %lf", a, sin(b));
+    printf("The value of sin(%.2lf) = %.2lf", a, sin(b));
 }
 
 void calc_cos(){
@@ -169,7 +169,7 @@ void calc_cos(){
     printf("\nEnter angle in degree: ");
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
-    printf("The value of cos(%lf) = %lf", a, cos(b));
+    printf("The value of cos(%.2lf) = %.2lf", a, cos(b));
 }
 
 void calc_tan(){
@@ -177,7 +177,7 @@ void calc_tan(){
     printf("\nEnter angle in degree: ");
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
-    printf("The value of tan(%lf) = %lf", a, tan(b));
+    printf("The value of tan(%.2lf) = %.2lf", a, tan(b));
 }
 
 void calc_cosec(){
@@ -185,5 +185,5 @@ void calc_cosec(){
     printf("\nEnter angle in degree: ");
     scanf("%lf", &a);
     b = (a * M_PI) / 180.0;
-    printf("The value of cosec(%lf) = %lf", a, 1/sin(b));
+    printf("The value of cosec(%.2lf) = %.2lf", a, 1/sin(b));
 }
