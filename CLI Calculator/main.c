@@ -63,9 +63,11 @@ int main(){
             }
             case 9:{
                 calc_tan();
+                break;
             }
             case 10:{
                 calc_cosec();
+                break;
             }
         }
     }
