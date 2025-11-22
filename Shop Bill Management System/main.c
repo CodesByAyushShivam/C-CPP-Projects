@@ -3,14 +3,14 @@
 void printList();
 int price(int, float);
 
-struct item
+typedef struct item
 {
     int price;
     char name[20];
     int id;
     float quant;
     int gst;
-};
+} unique;
 
 
 int main(){
@@ -18,9 +18,8 @@ int main(){
     printf("Enter the number of items: ");
     scanf("%d", &n);
     printList();
-    struct item list[n];
-    struct item *ptr;
-    ptr = list;
+    unique list[n];
+    int subTotal = 0;
     for (int i = 0; i < n; i++)
     {
         printf("Enter the id of the item %d: ", i+1);
@@ -28,7 +27,10 @@ int main(){
         printf("Enter the quantity item %d: ", i+1);
         scanf("%f", &list[i].quant);
         list[i].price = price(list[i].id, list[i].quant);
+        subTotal += list[i].price;
     }
+
+    printf("%d", subTotal);
     
     return 0;
 }
