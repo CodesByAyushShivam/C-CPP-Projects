@@ -19,7 +19,6 @@ struct item
 int main(){
     int n;
     printf("Enter the number of items: ");
-    // printf("Unix Timestamp: %ld\n", time(NULL));
     scanf("%d", &n);
     printList();
     struct item list[n];
@@ -35,6 +34,11 @@ int main(){
         list[i].gst = gstrate();
         list[i].gst = calGst(list[i].price, list[i].gst);
     }
+    
+    FILE *file;
+    file = fopen("reciept_history.txt", "a");
+    fprintf(file, "\n\n\n%c Reciept Generated at: %ld", '#', time(NULL));
+    fclose(file);
     
     return 0;
 }
@@ -87,43 +91,49 @@ float calGst(float price, int rate){
     return price * rate ;
 }
 
-int gstrate(){
+int gstrate() {
     int n;
-
     printf("Choose GST rate for this product. Enter the serial number against the required GST to get it as input: \n 1. 5%c \n 2. 12%c \n 3. 18%c \n 4. 28%c \n 5. 40%c \n Any other value will result in inclusion of 0%c GST on the final bill !! \n Input:", '%', '%', '%', '%', '%', '%');
     scanf("%d", &n);
-    switch (n){
-    case 1:{
-        printf("5 %c applied on your product \n", '%');
+    switch (n)
+    {
+    case 1:
+    {
+        printf("5%c applied on your product \n", '%');
         return 5;
         break;
     }
-    
-    case 2:{
-        printf("12 %c applied on your product \n", '%');
+
+    case 2:
+    {
+        printf("12%c applied on your product \n", '%');
         return 12;
         break;
     }
-    
-    case 3:{
-        printf("18 %c applied on your product \n", '%');
+
+    case 3:
+    {
+        printf("18%c applied on your product \n", '%');
         return 18;
         break;
     }
-    
-    case 4:{
-        printf("28 %c applied on your product \n", '%');
+
+    case 4:
+    {
+        printf("28%c applied on your product \n", '%');
         return 28;
         break;
     }
-    
-    case 5:{
-        printf("40 %c applied on your product \n", '%');
+
+    case 5:
+    {
+        printf("40%c applied on your product \n", '%');
         return 40;
         break;
     }
-    
-    default:{
+
+    default:
+    {
         printf("No applied on your product \n");
         return 0;
         break;
