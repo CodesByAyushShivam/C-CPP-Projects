@@ -1,12 +1,18 @@
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
+#include <stdlib.h>
 
 void printList();
 float price(int, float);
 float calGst(float, int);
-int gstrate();
+int gstrate(int);
+char *getNamebyId(int);
+float getPricebyId(int);
 
-struct item {
+struct item
+{
+    float unitPrice;
     float price;
     char name[20];
     int id;
@@ -15,127 +21,310 @@ struct item {
     float gstAmount;
 };
 
+char *generateReceipt(struct item[], int);
 
-int main(){
+int main()
+{
     int n;
     printf("Enter the number of items: ");
     scanf("%d", &n);
     printList();
     struct item list[n];
-    struct item *ptr;
-    ptr = list;
     for (int i = 0; i < n; i++)
     {
-        printf("Enter the id of the item %d: ", i+1);
+        printf("Enter the id of the item %d: ", i + 1);
         scanf("%d", &list[i].id);
-        printf("Enter the quantity item %d: ", i+1);
+        if (list[i].id < 1 || list[i].id > 7)
+        {
+            printf("Invalid ID! Try again.\n");
+            i--;
+            continue;
+        }
+        strcpy(list[i].name, getNamebyId(list[i].id));
+        list[i].unitPrice = getPricebyId(list[i].id);
+        printf("Enter the quantity item %d: ", i + 1);
         scanf("%f", &list[i].quant);
         list[i].price = price(list[i].id, list[i].quant);
-        list[i].gstRate = gstrate();
+        list[i].gstRate = gstrate(list[i].id);
         list[i].gstAmount = calGst(list[i].price, list[i].gstRate);
     }
-    
+
+    char *receipt = generateReceipt(list, n);
+
+    if (receipt == NULL)
+    {
+        printf("Memory allocation failed");
+        return 1;
+    }
+
+    printf("%s", receipt);
+
     FILE *file;
-    file = fopen("reciept_history.txt", "a");
-    fprintf(file, "\n\n\n%c Reciept Generated at: %ld", '#', time(NULL));
+    file = fopen("receipt_history.txt", "a");
+    if (file == NULL)
+    {
+        printf("Error opening file");
+        return 1;
+    }
+    time_t now;
+    struct tm *ist;
+    char buffer[100];
+
+    now = time(NULL);
+    ist = localtime(&now);
+
+    strftime(buffer, sizeof(buffer), "%d-%m-%Y %I:%M:%S %p", ist);
+    fprintf(file, "\n\n\n%s", receipt);
     fclose(file);
-    
+
     return 0;
 }
 
-void printList(){
+void printList()
+{
     printf("\n\nProduct and ID: \n\n");
-    printf("1. Curd\t\t Price: 70\n");
-    printf("2. Pea\t\t Price: 50\n");
-    printf("3. Paneer\t Price: 350\n");
-    printf("4. IceCream\t Price: 50\n");
-    printf("5. Milk\t\t Price: 58\n");
-    printf("6. MilkPowder\t Price: 35\n");
-    printf("7. Egg\t\t Price: 82\n");
+    printf("1. %s\t\t Price: %.2f\n", getNamebyId(1), getPricebyId(1));
+    printf("2. %s\t\t Price: %.2f\n", getNamebyId(2), getPricebyId(2));
+    printf("3. %s\t Price: %.2f\n", getNamebyId(3), getPricebyId(3));
+    printf("4. %s\t Price: %.2f\n", getNamebyId(4), getPricebyId(4));
+    printf("5. %s\t\t Price: %.2f\n", getNamebyId(5), getPricebyId(5));
+    printf("6. %s\t Price: %.2f\n", getNamebyId(6), getPricebyId(6));
+    printf("7. %s\t\t Price: %.2f\n", getNamebyId(7), getPricebyId(7));
 }
 
-float price(int id, float quant){
-    switch(id){
-        case 1:{
-            return quant*70;
-            break;
-        }
-        case 2:{
-            return quant*50;
-            break;
-        }
-        case 3:{
-            return quant*350;
-            break;
-        }
-        case 4:{
-            return quant*50;
-            break;
-        }
-        case 5:{
-            return quant*58;
-            break;
-        }
-        case 6:{
-            return quant*35;
-            break;
-        }
-        case 7:{
-            return quant*82;
-            break;
-        }
-        default:{
-            return 0;
-            break;
-        }
-    }
-}
-
-float calGst(float price, int rate){
-    return (price * rate) / 100 ;
-}
-
-int gstrate() {
-    int n;
-    printf("Choose GST rate for this product. Enter the serial number against the required GST to get it as input: \n 1. 5%c \n 2. 12%c \n 3. 18%c \n 4. 28%c \n 5. 40%c \n Any other value will result in inclusion of 0%c GST on the final bill !! \n Input:", '%', '%', '%', '%', '%', '%');
-    scanf("%d", &n);
-    switch (n)
+float price(int id, float quant)
+{
+    switch (id)
     {
     case 1:
     {
-        printf("5%c applied on your product \n", '%');
+        return quant * getPricebyId(1);
+    }
+    case 2:
+    {
+        return quant * getPricebyId(2);
+    }
+    case 3:
+    {
+        return quant * getPricebyId(3);
+    }
+    case 4:
+    {
+        return quant * getPricebyId(4);
+    }
+    case 5:
+    {
+        return quant * getPricebyId(5);
+    }
+    case 6:
+    {
+        return quant * getPricebyId(6);
+    }
+    case 7:
+    {
+        return quant * getPricebyId(7);
+    }
+    default:
+    {
+        return 0.00;
+    }
+    }
+}
+
+float calGst(float price, int rate)
+{
+    return (price * rate) / 100;
+}
+
+int gstrate(int id)
+{
+    if (id == 3 || id == 6)
+    {
+        printf("5%c GST applied on your product \n", '%');
         return 5;
     }
 
-    case 2:
+    else if (id == 4)
     {
-        printf("12%c applied on your product \n", '%');
-        return 12;
-    }
-
-    case 3:
-    {
-        printf("18%c applied on your product \n", '%');
+        printf("18%c GST applied on your product \n", '%');
         return 18;
     }
 
-    case 4:
+    else
     {
-        printf("28%c applied on your product \n", '%');
-        return 28;
-    }
-
-    case 5:
-    {
-        printf("40%c applied on your product \n", '%');
-        return 40;
-        break;
-    }
-
-    default:
-    {
-        printf("No applied on your product \n");
+        printf("0%c GST applied on your product \n", '%');
         return 0;
     }
+}
+
+char *getNamebyId(int id)
+{
+    switch (id)
+    {
+    case 1:
+    {
+        return "Curd";
     }
+    case 2:
+    {
+        return "Pea";
+    }
+    case 3:
+    {
+        return "Paneer";
+    }
+    case 4:
+    {
+        return "IceCream";
+    }
+    case 5:
+    {
+        return "Milk";
+    }
+    case 6:
+    {
+        return "MilkPowder";
+    }
+    case 7:
+    {
+        return "Egg";
+    }
+    default:
+    {
+        return "NULL";
+    }
+    }
+}
+
+float getPricebyId(int id)
+{
+    switch (id)
+    {
+    case 1:
+    {
+        return 70.00;
+    }
+    case 2:
+    {
+        return 50.00;
+    }
+    case 3:
+    {
+        return 350.00;
+    }
+    case 4:
+    {
+        return 50.00;
+    }
+    case 5:
+    {
+        return 58.00;
+    }
+    case 6:
+    {
+        return 35.00;
+    }
+    case 7:
+    {
+        return 82.00;
+    }
+    default:
+    {
+        return 0.00;
+    }
+    }
+}
+
+
+//AI Generated Reciept generation logic based on passed arguments and available data in struct item list[]
+char *generateReceipt(struct item list[], int n)
+{
+
+    char *receipt = (char *)malloc(5000 * sizeof(char));
+
+    if (receipt == NULL)
+    {
+        return NULL;
+    }
+
+    float subtotal = 0.00;
+    float totalGst = 0.00;
+    float grandTotal = 0.00;
+
+    time_t now;
+    struct tm *ist;
+    char buffer[100];
+
+    now = time(NULL);
+    ist = localtime(&now);
+
+    strftime(buffer, sizeof(buffer), "%d-%m-%Y %I:%M:%S %p", ist);
+
+    int len = 0;
+
+    len += sprintf(receipt + len,
+                   "========================================\n");
+
+    len += sprintf(receipt + len,
+                   "            GROCERY RECEIPT\n");
+
+    len += sprintf(receipt + len,
+                   "========================================\n\n");
+
+    len += sprintf(receipt + len,
+                   "Generated at: %s\n\n", buffer);
+
+    len += sprintf(receipt + len,
+                   "-------------------------------------------------------------\n");
+
+    len += sprintf(receipt + len,
+                   "%-15s %-8s %-10s %-10s %-10s\n",
+                   "Item", "Qty", "Price", "GST", "Total");
+
+    len += sprintf(receipt + len,
+                   "-------------------------------------------------------------\n");
+
+    for (int i = 0; i < n; i++)
+    {
+
+        float finalPrice =
+            list[i].price + list[i].gstAmount;
+
+        subtotal += list[i].price;
+        totalGst += list[i].gstAmount;
+
+        len += sprintf(receipt + len,
+                       "%-15s %-8.2f %-10.2f %-10.2f %-10.2f\n",
+
+                       list[i].name,
+                       list[i].quant,
+                       list[i].price,
+                       list[i].gstAmount,
+                       finalPrice);
+    }
+
+    grandTotal = subtotal + totalGst;
+
+    len += sprintf(receipt + len,
+                   "-------------------------------------------------------------\n");
+
+    len += sprintf(receipt + len,
+                   "Subtotal: %.2f\n", subtotal);
+
+    len += sprintf(receipt + len,
+                   "Total GST: %.2f\n", totalGst);
+
+    len += sprintf(receipt + len,
+                   "Grand Total: %.2f\n", grandTotal);
+
+    len += sprintf(receipt + len,
+                   "\n========================================\n");
+
+    len += sprintf(receipt + len,
+                   "         THANK YOU VISIT AGAIN\n");
+
+    len += sprintf(receipt + len,
+                   "========================================\n");
+
+    return receipt;
 }
