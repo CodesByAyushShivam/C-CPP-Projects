@@ -6,13 +6,13 @@ float price(int, float);
 float calGst(float, int);
 int gstrate();
 
-struct item
-{
+struct item {
     float price;
     char name[20];
     int id;
     float quant;
-    int gst;
+    int gstRate;
+    float gstAmount;
 };
 
 
@@ -31,8 +31,8 @@ int main(){
         printf("Enter the quantity item %d: ", i+1);
         scanf("%f", &list[i].quant);
         list[i].price = price(list[i].id, list[i].quant);
-        list[i].gst = gstrate();
-        list[i].gst = calGst(list[i].price, list[i].gst);
+        list[i].gstRate = gstrate();
+        list[i].gstAmount = calGst(list[i].price, list[i].gstRate);
     }
     
     FILE *file;
@@ -84,11 +84,15 @@ float price(int id, float quant){
             return quant*82;
             break;
         }
+        default:{
+            return 0;
+            break;
+        }
     }
 }
 
 float calGst(float price, int rate){
-    return price * rate ;
+    return (price * rate) / 100 ;
 }
 
 int gstrate() {
@@ -101,28 +105,24 @@ int gstrate() {
     {
         printf("5%c applied on your product \n", '%');
         return 5;
-        break;
     }
 
     case 2:
     {
         printf("12%c applied on your product \n", '%');
         return 12;
-        break;
     }
 
     case 3:
     {
         printf("18%c applied on your product \n", '%');
         return 18;
-        break;
     }
 
     case 4:
     {
         printf("28%c applied on your product \n", '%');
         return 28;
-        break;
     }
 
     case 5:
@@ -136,7 +136,6 @@ int gstrate() {
     {
         printf("No applied on your product \n");
         return 0;
-        break;
     }
     }
 }
