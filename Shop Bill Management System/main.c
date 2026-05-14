@@ -32,8 +32,8 @@ int main(){
         printf("Enter the quantity item %d: ", i+1);
         scanf("%f", &list[i].quant);
         list[i].price = price(list[i].id, list[i].quant);
-        int gst = gstrate();
-        list[i].gst = calGst(list[i].price, gst);
+        list[i].gst = gstrate();
+        list[i].gst = calGst(list[i].price, list[i].gst);
     }
     
     return 0;
